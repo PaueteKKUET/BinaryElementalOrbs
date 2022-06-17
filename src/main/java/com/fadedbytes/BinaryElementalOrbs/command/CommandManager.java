@@ -19,13 +19,16 @@ public class CommandManager {
         EXECUTORS.put(executor.getCommandName(), executor);
     }
 
-    public static CommandExecutionCode runCommand(CommandSender sender, String command, String... args) {
+    public static void runCommand(CommandSender sender, String command, String... args) {
         CommandExecutor executor = EXECUTORS.get(command);
         if (executor != null) {
-            return executor.runCommand(sender, command, args);
+            CommandExecutionCode code = executor.runCommand(sender, command, args);
+            if (code != CommandExecutionCode.SUCCESS) {
+                sender.sendMessage(code.getDefaultMessage());
+            }
         } else {
             sender.sendMessage(CommandExecutionCode.UNKNOWN_COMMAND.getDefaultMessage());
-            return CommandExecutionCode.UNKNOWN_COMMAND;
+
         }
     }
 

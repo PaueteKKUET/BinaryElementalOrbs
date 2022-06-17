@@ -23,11 +23,10 @@ public class ConsoleManager {
         }
     }
 
-    public static CommandExecutionCode executeCommand(@NotNull String command, @NotNull Console console) {
+    public static void executeCommand(@NotNull String command, @NotNull Console console) {
 
         if (command.isBlank()) {
             console.println("");
-            return CommandExecutionCode.BLANK_COMMAND;
         }
 
         String[] commandParts = command.split(" ");
@@ -35,7 +34,7 @@ public class ConsoleManager {
         String commandName = commandParts[0];
         String[] commandArgs = Arrays.copyOfRange(commandParts, 1, commandParts.length);
 
-        return CommandManager.runCommand(console, commandName, commandArgs);
+        CommandManager.runCommand(console, commandName, commandArgs);
     }
 
     public static Console getConsoleManager(@NotNull NamespacedKey key) {
