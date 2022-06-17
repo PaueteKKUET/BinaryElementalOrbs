@@ -76,7 +76,11 @@ public class HelpCommand implements CommandExecutor {
             return;
         }
 
-        sender.sendMessage("/" + command + ": " + executor.getCommandDescription());
+        sender.sendMessage(
+                "/" + command +
+                ": " + executor.getCommandDescription() +
+                (executor instanceof Aliasable aliasableCommand ? " (aliases: " + String.join(", ", aliasableCommand.getAliases()) + ")" : "")
+        );
 
     }
 }

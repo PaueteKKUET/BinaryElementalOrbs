@@ -5,7 +5,9 @@ import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutionCode;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutor;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandSender;
 
-public class ExitCommand implements CommandExecutor {
+import java.util.List;
+
+public class ExitCommand implements CommandExecutor, Aliasable {
 
     @Override
     public CommandExecutionCode runCommand(CommandSender sender, String command, String... args) {
@@ -34,5 +36,13 @@ public class ExitCommand implements CommandExecutor {
     @Override
     public String getCommandDescription() {
         return "Stops the server";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return List.of(
+                "stop",
+                "killserver"
+        );
     }
 }

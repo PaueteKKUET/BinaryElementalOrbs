@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.command;
 
+import com.fadedbytes.BinaryElementalOrbs.command.commands.Aliasable;
 import com.fadedbytes.BinaryElementalOrbs.command.commands.ExitCommand;
 import com.fadedbytes.BinaryElementalOrbs.command.commands.HelpCommand;
 
@@ -9,6 +10,7 @@ import java.util.Set;
 public class CommandManager {
 
     private static final HashMap<String, CommandExecutor> EXECUTORS = new HashMap<>();
+    private static final HashMap<String, String> ALIASES = new HashMap<>();
 
     public static void setupCommands() {
         register(new ExitCommand());
@@ -17,6 +19,13 @@ public class CommandManager {
 
     public static void register(CommandExecutor executor) {
         EXECUTORS.put(executor.getCommandName(), executor);
+
+        if (executor instanceof Aliasable aliasableCommand) {
+            for (String alias : aliasableCommand.getAliases()) {
+                ALIASES.put(alias, executor.getCommandName());
+            }
+        }
+
     }
 
     public static void runCommand(CommandSender sender, String command, String... args) {
@@ -27,8 +36,14 @@ public class CommandManager {
                 sender.sendMessage(code.getDefaultMessage());
             }
         } else {
-            sender.sendMessage(CommandExecutionCode.UNKNOWN_COMMAND.getDefaultMessage());
 
+            String originalCommand = ALIASES.get(command);
+            executor = EXECUTORS.get(originalCommand);
+            if (executor == null) {
+                sender.sendMessage(CommandExecutionCode.UNKNOWN_COMMAND.getDefaultMessage());
+            } else {
+                runCommand(sender, originalCommand, args);
+            }
         }
     }
 
