@@ -13,7 +13,7 @@ public class ConsoleManager {
     public static final ThreadGroup CONSOLE_THREAD_GROUP = new ThreadGroup("Console");
     private static final HashMap<NamespacedKey, Console> CONSOLE_MANAGERS = new HashMap<>();
 
-    public static Console getConsoleManager(@NotNull NamespacedKey key, @NotNull InputStream inputStream, OutputStream outputStream) {
+    public static Console getConsole(@NotNull NamespacedKey key, @NotNull InputStream inputStream, OutputStream outputStream) {
         if (!CONSOLE_MANAGERS.containsKey(key)) {
             Console newConsole = new ServerConsole(key, inputStream, outputStream);
             CONSOLE_MANAGERS.put(key, newConsole);

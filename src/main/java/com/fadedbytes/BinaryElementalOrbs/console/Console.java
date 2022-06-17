@@ -15,4 +15,6 @@ public interface Console extends CommandSender {
 
     void println(String message);
 
+    void printMotd();
+
 }

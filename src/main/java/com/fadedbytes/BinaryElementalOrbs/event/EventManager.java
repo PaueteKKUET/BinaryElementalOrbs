@@ -7,9 +7,12 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class EventManager {
+
+    private static final Class<?>[] LISTENER_METHOD_PARAMETERS = new Class[] {
+            Event.class
+    };
 
     private final HashMap<NamespacedKey, Method[]> LISTENERS;
 
@@ -26,20 +29,31 @@ public class EventManager {
         Collection<Method> validMethods = new ArrayList<>();
 
         for (Method method : methods) {
-            com.fadedbytes.BinaryElementalOrbs.event.EventListener annotation = method.getAnnotation(com.fadedbytes.BinaryElementalOrbs.event.EventListener.class);
-            if (annotation == null) continue;
-
-            validMethods.add(method);
+            if (isValidListenerMethod(method)) {
+                validMethods.add(method);
+            }
         }
 
         if (validMethods.isEmpty()) {
             throw new IllegalArgumentException("No valid methods found for class: " + listenerClass.getName());
         } else {
             LISTENERS.put(key, validMethods.toArray(new Method[0]));
+            System.out.println("Registered " + validMethods.size() + " methods for key: " + key);
         }
     }
 
-    public void removeEventListener() {
+    private boolean isValidListenerMethod(Method listenerCandidate) {
+        com.fadedbytes.BinaryElementalOrbs.event.EventListener annotation = listenerCandidate.getAnnotation(com.fadedbytes.BinaryElementalOrbs.event.EventListener.class);
+        if (annotation == null) return false;
+
+        Class<?>[] parameterTypes = listenerCandidate.getParameterTypes();
+        if (parameterTypes.length != LISTENER_METHOD_PARAMETERS.length) return false;
+
+        for (int i = 0; i < parameterTypes.length; i++) {
+            if (!parameterTypes[i].equals(LISTENER_METHOD_PARAMETERS[i])) return false;
+        }
+
+        return true;
 
     }
 

@@ -25,6 +25,7 @@ public final class ServerConsole implements Console {
         this.permission = PermissionRole.USER;
 
         this.start();
+        this.printMotd();
     }
 
     public void start() {
@@ -69,6 +70,11 @@ public final class ServerConsole implements Console {
         print(message + "\n");
     }
 
+    @Override
+    public void printMotd() {
+        println("Server starting...");
+        println("Console started");
+    }
 
 
     @Override
