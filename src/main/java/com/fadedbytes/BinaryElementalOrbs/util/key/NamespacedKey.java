@@ -11,6 +11,9 @@ public class NamespacedKey {
 
     public NamespacedKey(@NotNull String namespace, @NotNull String key) {
 
+        namespace = namespace.toLowerCase();
+        key = key.toLowerCase();
+
         if (!(isValidString(namespace) && isValidString(key))) {
             throw new IllegalArgumentException("Invalid namespace or key for " + namespace + ":" + key + ". Values must only contain lower case alphanumeric characters, numbers and underscores.");
         }

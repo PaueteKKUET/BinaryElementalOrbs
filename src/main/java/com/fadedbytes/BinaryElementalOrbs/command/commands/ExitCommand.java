@@ -1,6 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.command.commands;
 
-import com.fadedbytes.BinaryElementalOrbs.ServerStart;
+import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutionCode;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutor;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandSender;
@@ -15,7 +15,7 @@ public class ExitCommand implements CommandExecutor, Aliasable {
 
             sender.sendMessage("Exiting...");
 
-            ServerStart.exit();
+            BEO.exit();
             return CommandExecutionCode.SUCCESS;
         } else {
             sendDefaultCodeMessage(sender, CommandExecutionCode.NO_PERMISSION);

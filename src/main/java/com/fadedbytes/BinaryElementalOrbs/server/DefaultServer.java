@@ -5,7 +5,10 @@ import com.fadedbytes.BinaryElementalOrbs.console.Console;
 import com.fadedbytes.BinaryElementalOrbs.console.ConsoleManager;
 import com.fadedbytes.BinaryElementalOrbs.console.ServerConsole;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
+import com.fadedbytes.BinaryElementalOrbs.event.events.ServerStartupEvent;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
+
+import java.time.LocalDate;
 
 public class DefaultServer implements BeoServer {
 
@@ -15,6 +18,11 @@ public class DefaultServer implements BeoServer {
     private Console defaultConsole;
 
     protected DefaultServer() {
+        setupEventManager();
+
+        ServerStartupEvent startupEvent = new ServerStartupEvent(this, LocalDate.now());
+        startupEvent.launch();
+
         setupConsole();
     }
 
@@ -32,6 +40,7 @@ public class DefaultServer implements BeoServer {
                 System.in,
                 System.out
         );
+        ((ServerConsole) defaultConsole).setPermission(PermissionRole.CONSOLE);
     }
 
     private void setupEventManager() {
