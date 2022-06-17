@@ -1,4 +1,4 @@
-package com.fadedbytes.BinaryElementalOrbs.api.network.sender;
+package com.fadedbytes.BinaryElementalOrbs.api.network.packet;
 
 public enum PacketType {
 
@@ -27,6 +27,14 @@ public enum PacketType {
         }
 
         throw new IllegalArgumentException("No packet type found with name: " + name);
+    }
+
+    public static PacketType getUpstreamPacket(String name) {
+        return getPacketType("UPSTREAM_" + name.toUpperCase());
+    }
+
+    public static PacketType getDownstreamPacket(String name) {
+        return getPacketType("DOWNSTREAM_" + name.toUpperCase());
     }
 
 }

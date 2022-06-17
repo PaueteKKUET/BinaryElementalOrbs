@@ -1,12 +1,12 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 
 public abstract class SocketManager implements AutoCloseable {
 
-    private Socket SOCKET;
+    private DatagramSocket SOCKET;
 
     public SocketManager(InetAddress address) throws IOException {
         initSocket(address, 0);
@@ -17,15 +17,15 @@ public abstract class SocketManager implements AutoCloseable {
     }
 
     private void initSocket(InetAddress address, int port) throws IOException {
-        this.SOCKET = new Socket(address, port);
+        this.SOCKET = new DatagramSocket(port, address);
     }
 
     private void closeSocket() throws IOException {
         this.SOCKET.close();
     }
 
-    public Socket getSocket() {
-        return null;
+    public DatagramSocket getSocket() {
+        return SOCKET;
     }
 
     @Override

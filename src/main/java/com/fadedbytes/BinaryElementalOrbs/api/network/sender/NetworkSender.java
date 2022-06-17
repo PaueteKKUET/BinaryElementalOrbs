@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.sender;
 
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.PacketType;
 import org.json.simple.JSONObject;
 
 public interface NetworkSender {
