@@ -35,6 +35,8 @@ public final class BEO {
 
     public static void launchTests() {
         new EventListenerTest();
+
+        PacketWrapperTests.testWrapper();
     }
 
 }
