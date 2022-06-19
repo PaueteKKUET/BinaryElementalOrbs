@@ -24,7 +24,7 @@ public abstract class SocketManager implements AutoCloseable {
         this.SOCKET.close();
     }
 
-    public DatagramSocket getSocket() {
+    protected DatagramSocket getSocket() {
         return SOCKET;
     }
 
@@ -35,7 +35,7 @@ public abstract class SocketManager implements AutoCloseable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "[" + this.SOCKET.getInetAddress().getHostAddress() + ":" + this.SOCKET.getPort() + "]";
+        return this.getClass().getSimpleName() + "[" + this.SOCKET.getLocalSocketAddress() + ":" + this.SOCKET.getPort() + "]";
     }
 
 }

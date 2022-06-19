@@ -15,11 +15,23 @@ public class SimplePacketUnwrapper implements PacketUnwrapper {
     public Tag generateTagFromString(@NotNull String plainTextTag) throws MalformedTagException {
         RegularTag rootTag = createRootContainer();
         formatChildTagFor(rootTag, preFormat(plainTextTag));
-        return rootTag;
+        return removeRootContainer(rootTag);
     }
 
     private RegularTag createRootContainer() throws MalformedTagException {
         return new RegularTag(null, "root");
+    }
+
+    private RegularTag removeRootContainer(RegularTag rootTag) throws MalformedTagException {
+        if (rootTag.getName().equals("root")) {
+            RegularTag beoTag = (RegularTag) rootTag.getInnerTags().get(0);
+            if (beoTag == null) {
+                throw new MalformedTagException("Missing main tag");
+            }
+            return beoTag;
+        } else {
+            throw new MalformedTagException("Root tag is not the first tag in the packet.");
+        }
     }
 
     private void formatChildTagFor(RegularTag parentTag, String rawString) throws MalformedTagException {
@@ -101,7 +113,7 @@ public class SimplePacketUnwrapper implements PacketUnwrapper {
         // calculate the part of the raw string we will not process
         int unprocessedStringIndex = closeTagIndex + closeTag.length();
 
-        final String unprocessedString = unprocessedStringIndex >= rawString.length() ? "" : rawString.substring(unprocessedStringIndex);
+        final String unprocessedString = unprocessedStringIndex >= rawString.length() ? "" : rawString.substring(unprocessedStringIndex).trim();
 
         // parse the tag attributes, if exists
         final String rawOpenTag = rawString.substring(0, lastOpenTagIndex + 1);

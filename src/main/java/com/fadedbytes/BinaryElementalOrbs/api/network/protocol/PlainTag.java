@@ -44,7 +44,7 @@ public class PlainTag implements Tag {
     }
 
     @Override
-    public String getInnerTag(String tagName) {
+    public Tag getInnerTag(String tagName) {
         return null;
     }
 

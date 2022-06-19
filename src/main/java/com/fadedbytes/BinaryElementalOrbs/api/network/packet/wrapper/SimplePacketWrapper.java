@@ -18,7 +18,7 @@ public class SimplePacketWrapper implements PacketWrapper {
 
         StringBuilder builder = new StringBuilder();
 
-        return processTag(builder, tag, 0).toString();
+        return processTag(builder, tag, 0).toString().trim();
     }
 
     private @NotNull StringBuilder processTag(StringBuilder builder, Tag tag, int level) throws MalformedTagException {

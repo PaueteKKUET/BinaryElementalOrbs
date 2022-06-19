@@ -26,6 +26,7 @@ public final class ServerNetworkManager {
 
     public static void addSocketManager(SocketManager manager) {
         SOCKET_MANAGERS.add(manager);
+        startListeners();
     }
 
     /**

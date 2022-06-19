@@ -55,13 +55,26 @@ public class RegularTag implements Tag {
     }
 
     @Override
-    public String getInnerTag(String tagName) {
-        for (Tag tag : innerTags) {
-            if (tag.getName().equals(tagName)) {
-                return tag.getValue();
+    public Tag getInnerTag(String tagName) {
+
+        String[] subLevels = tagName.split("\\.");
+        Tag foundTag = null;
+
+        for (Tag innerTag : this.getInnerTags()) {
+            if (innerTag.getName().equals(subLevels[0])) {
+                foundTag = innerTag;
+                break;
             }
         }
-        return null;
+        if (foundTag == null) {
+            return null;
+        }
+
+        if (subLevels.length == 1) {
+            return foundTag;
+        } else {
+            return foundTag.getInnerTag(tagName.substring(subLevels[0].length() + 1));
+        }
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.fadedbytes.BinaryElementalOrbs.api.network.protocol;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,11 +33,13 @@ public interface Tag {
 
     /**
      * Returns the inner tag of this tag with the given name, or null if the tag doesn't contain a tag with the given name.
+     * <br>
+     * The parameter can also be a path to a tag, separated by dots. For example, "root.content.value1".
+     *
      * @param tagName The name of the tag to get.
      * @return The inner tag with the given name, or null if the tag doesn't contain a tag with the given name.
      */
-    @Nullable
-    String getInnerTag(String tagName);
+    Tag getInnerTag(String tagName);
 
     /**
      * @return the list of inner tags of this tag. If the tag doesn't contain any inner tags, an empty list is returned.

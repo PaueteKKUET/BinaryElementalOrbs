@@ -1,6 +1,5 @@
 package com.fadedbytes.BinaryElementalOrbs;
 
-import com.fadedbytes.BinaryElementalOrbs.command.CommandManager;
 import com.fadedbytes.BinaryElementalOrbs.event.events.ServerShutdownEvent;
 import com.fadedbytes.BinaryElementalOrbs.server.BeoServer;
 import com.fadedbytes.BinaryElementalOrbs.server.DefaultServer;
@@ -12,13 +11,8 @@ public final class BEO {
     public static void main(String[] args) {
 
         server = DefaultServer.getServer();
-        startModules();
+
         launchTests();
-    }
-
-    private static void startModules() {
-        CommandManager.setupCommands();
-
     }
 
     // Public control methods
