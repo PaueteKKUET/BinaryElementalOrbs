@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor;
 
+import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
 
 public class ConnectionRequestPacketProcessor extends BasePacketProcessor {
@@ -10,6 +11,6 @@ public class ConnectionRequestPacketProcessor extends BasePacketProcessor {
 
     @Override
     public void process(Packet packet) {
-        System.out.println("Connection request packet received");
+        BEO.getLogger().debug("Connection request packet received");
     }
 }

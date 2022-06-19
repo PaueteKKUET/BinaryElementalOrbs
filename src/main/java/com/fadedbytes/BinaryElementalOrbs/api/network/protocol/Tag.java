@@ -105,7 +105,6 @@ public interface Tag {
             return root;
 
         } catch (MalformedTagException e) {
-            e.printStackTrace();
             return null;
         }
     }

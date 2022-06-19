@@ -26,7 +26,8 @@ public class PingPacketProcessor extends BasePacketProcessor {
             try {
                 packet.reply(createPacket());
             } catch (MalformedTagException e) {
-                e.printStackTrace();
+                BEO.getLogger().error("Failed to create PONG packet");
+                BEO.getLogger().trace(e.getStackTrace());
             }
         }
 
