@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * Arguments are clarifications on the meaning of a comlpex tag.
  */
 
-public interface TagArgument {
+public interface TagAttribute {
 
     /**
      * @return the name of the argument.

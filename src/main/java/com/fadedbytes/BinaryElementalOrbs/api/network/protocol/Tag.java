@@ -3,6 +3,8 @@ package com.fadedbytes.BinaryElementalOrbs.api.network.protocol;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public interface Tag {
@@ -48,5 +50,39 @@ public interface Tag {
      */
     @Nullable
     Tag getParent();
+
+    static Tag createTag(@Nullable RegularTag parent, @NotNull String name, @NotNull String value, @Nullable Collection<TagAttribute> attributes) throws MalformedTagException {
+        return _createTag(parent, name, value, attributes, false);
+    }
+
+    static Tag createTag(@Nullable RegularTag parent, @NotNull String name, @NotNull String value) throws MalformedTagException {
+        return createTag(parent, name, value, null);
+    }
+
+    static Tag createOuterTag(@Nullable RegularTag parent, @NotNull String name, @Nullable Collection<TagAttribute> attributes) throws MalformedTagException {
+        return _createTag(parent, name, null, attributes, true);
+    }
+
+    static Tag createOuterTag(@Nullable RegularTag parent, @NotNull String name) throws MalformedTagException {
+        return createOuterTag(parent, name, null);
+    }
+
+    private static Tag _createTag(@Nullable RegularTag parent, @NotNull String name, String value, @Nullable Collection<TagAttribute> attributes, boolean isOuter) throws MalformedTagException {
+        if (isOuter) {
+            if (attributes == null) {
+                return new RegularTag(parent, name);
+            } else {
+                return new ComplexRegularTag(parent, name, attributes);
+            }
+        } else {
+            if (value == null) value = "";
+            if (attributes == null) {
+                return new PlainTag(parent, name, value);
+            } else {
+                return new ComplexPlainTag(parent, name, value, attributes);
+            }
+        }
+
+    }
 
 }

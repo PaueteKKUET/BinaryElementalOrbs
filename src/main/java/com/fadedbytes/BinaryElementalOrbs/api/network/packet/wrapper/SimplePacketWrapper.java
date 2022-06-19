@@ -3,7 +3,7 @@ package com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.ComplexTag;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.MalformedTagException;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.Tag;
-import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.TagArgument;
+import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.TagAttribute;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -74,7 +74,7 @@ public class SimplePacketWrapper implements PacketWrapper {
     private String generateTagAttributes(Tag tag) {
         if (tag instanceof ComplexTag complexTag) {
             StringBuilder attributes = new StringBuilder();
-            for (TagArgument attribute : complexTag.getArguments()) {
+            for (TagAttribute attribute : complexTag.getArguments()) {
                 attributes
                         .append(" ")
                         .append(attribute.name())

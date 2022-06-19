@@ -6,8 +6,8 @@ import java.util.List;
 
 public class PlainTag implements Tag {
 
-    private Tag parent;
-    private String name;
+    private final Tag parent;
+    private final String name;
     private String value;
 
     public PlainTag(Tag parentTag, @NotNull String name, @NotNull String value) throws MalformedTagException {
@@ -15,8 +15,6 @@ public class PlainTag implements Tag {
 
         this.name = name;
         this.value = value;
-
-
 
         if (this.parent instanceof RegularTag regularParent) {
             regularParent.addInnerTags(this);
@@ -60,4 +58,8 @@ public class PlainTag implements Tag {
         return this.parent;
     }
 
+    @Override
+    public String toString() {
+        return "";
+    }
 }

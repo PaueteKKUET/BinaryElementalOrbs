@@ -1,7 +1,5 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.packet;
 
-import org.json.simple.parser.JSONParser;
-
 import java.io.InvalidObjectException;
 import java.util.HashMap;
 import java.util.LinkedList;

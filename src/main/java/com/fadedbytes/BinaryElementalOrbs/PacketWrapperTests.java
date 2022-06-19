@@ -1,13 +1,12 @@
 package com.fadedbytes.BinaryElementalOrbs;
 
-import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketUnwrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketWrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketUnwrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketWrapper;
-import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.MalformedTagException;
-import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.PlainTag;
-import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.RegularTag;
-import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.Tag;
+import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class PacketWrapperTests {
 
@@ -41,9 +40,15 @@ public class PacketWrapperTests {
     }
 
     private static Tag generateMainTag() {
-        RegularTag beoTag = null;
+        ComplexRegularTag beoTag = null;
         try {
-            beoTag = new RegularTag(null, "beo");
+
+            Collection<TagAttribute> beoArguments = new ArrayList<>();
+
+            beoArguments.add(new DefaultTagArgument("color", "blue"));
+            beoArguments.add(new DefaultTagArgument("wood", "cherry"));
+
+            beoTag = new ComplexRegularTag(null, "beo", beoArguments);
 
             RegularTag headersTag = new RegularTag(beoTag, "headers");
 
@@ -66,9 +71,18 @@ public class PacketWrapperTests {
     public static void testUnwrapper(String wrappedPacket) {
         SimplePacketUnwrapper unwrapper = new SimplePacketUnwrapper();
         try {
-            // TODO
+            System.out.println("Generated wrapped string, now unwrapping");
+            System.out.println(wrappedPacket);
+
+            System.out.println();
+            System.out.println("Generating from unwrapped");
+            Tag reunwrapped = unwrapper.generateTagFromString(wrappedPacket);
+
+            SimplePacketWrapper wrapper = new SimplePacketWrapper();
+            System.out.println(wrapper.generatePacketContent(reunwrapped));
         } catch (Exception e) {
             System.out.println("FAIL");
+            e.printStackTrace();
         }
 
     }

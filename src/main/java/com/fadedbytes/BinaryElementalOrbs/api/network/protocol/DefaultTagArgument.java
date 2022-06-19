@@ -2,13 +2,13 @@ package com.fadedbytes.BinaryElementalOrbs.api.network.protocol;
 
 import org.jetbrains.annotations.NotNull;
 
-public class DefaultTagArgument implements TagArgument {
+public class DefaultTagArgument implements TagAttribute {
 
     private final String name;
 
     private String value;
 
-    DefaultTagArgument(String name, String value) {
+    public DefaultTagArgument(String name, String value) {
         this.name = name;
         this.value = value;
     }

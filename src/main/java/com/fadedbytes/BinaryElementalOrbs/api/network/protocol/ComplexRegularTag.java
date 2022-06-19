@@ -7,22 +7,22 @@ import java.util.Collection;
 
 public class ComplexRegularTag extends RegularTag implements ComplexTag {
 
-    private final Collection<TagArgument> arguments;
+    private final Collection<TagAttribute> arguments;
 
-    public ComplexRegularTag(Tag parentTag, String tagName, Collection<TagArgument> arguments, Tag... innerTags) throws MalformedTagException {
+    public ComplexRegularTag(Tag parentTag, String tagName, Collection<TagAttribute> arguments, Tag... innerTags) throws MalformedTagException {
         super(parentTag, tagName, innerTags);
         this.arguments = arguments;
     }
 
     @Override
-    public @NotNull Collection<TagArgument> getArguments() {
+    public @NotNull Collection<TagAttribute> getArguments() {
         return arguments;
     }
 
     @Override
-    public @Nullable TagArgument getArgumentByName(@NotNull String name) {
-        TagArgument argument = null;
-        for (TagArgument arg : getArguments()) {
+    public @Nullable TagAttribute getArgumentByName(@NotNull String name) {
+        TagAttribute argument = null;
+        for (TagAttribute arg : getArguments()) {
             if (arg.name().equals(name)) {
                 argument = arg;
                 break;
@@ -32,13 +32,13 @@ public class ComplexRegularTag extends RegularTag implements ComplexTag {
     }
 
     @Override
-    public void addArgument(@NotNull TagArgument argument) {
+    public void addArgument(@NotNull TagAttribute argument) {
         arguments.add(argument);
     }
 
     @Override
     public void setArgumentByName(@NotNull String name, @NotNull String value) {
-        TagArgument argument = getArgumentByName(name);
+        TagAttribute argument = getArgumentByName(name);
         if (argument != null) {
             argument.setValue(value);
             return;
@@ -48,7 +48,7 @@ public class ComplexRegularTag extends RegularTag implements ComplexTag {
 
     @Override
     public void removeArgumentByName(String name) {
-        TagArgument argument = getArgumentByName(name);
+        TagAttribute argument = getArgumentByName(name);
         if (argument != null) {
             arguments.remove(argument);
         }
