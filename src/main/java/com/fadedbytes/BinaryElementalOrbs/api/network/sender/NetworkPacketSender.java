@@ -9,6 +9,7 @@ import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.MalformedTagExcep
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 
 public class NetworkPacketSender extends SocketManager implements NetworkSender {
@@ -24,11 +25,11 @@ public class NetworkPacketSender extends SocketManager implements NetworkSender 
     }
 
     @Override
-    public void send(Packet packet, InetAddress address, int port) {
+    public void send(Packet packet, SocketAddress address) {
         byte[] data;
         try {
             data = WRAPPER.generatePacketContent(packet.getRootTag()).getBytes(StandardCharsets.UTF_8);
-            this.getSocket().send(new DatagramPacket(data, data.length, address, port));
+            this.getSocket().send(new DatagramPacket(data, data.length, address));
         } catch (MalformedTagException | IOException e) {
             e.printStackTrace();
         }

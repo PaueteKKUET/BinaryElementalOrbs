@@ -32,8 +32,6 @@ public class NetworkPacketListener extends SocketManager implements NetworkListe
                 DatagramSocket socket = this.getSocket();
                 socket.receive(packet);
 
-                System.out.println("Received packet from " + packet.getAddress().getHostAddress() + ":" + packet.getPort());
-
                 receivePacket(packet);
 
             } catch (IOException e) {
@@ -59,7 +57,6 @@ public class NetworkPacketListener extends SocketManager implements NetworkListe
             DefaultServer.getServer().receivePacket(newPacket);
         } catch (MalformedTagException e) {
             System.out.println("Error while reading a received packet");
-            e.printStackTrace();
         }
     }
 }

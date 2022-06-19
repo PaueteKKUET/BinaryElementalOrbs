@@ -6,6 +6,9 @@ import com.fadedbytes.BinaryElementalOrbs.api.network.SocketManager;
 import com.fadedbytes.BinaryElementalOrbs.api.network.listener.NetworkListener;
 import com.fadedbytes.BinaryElementalOrbs.api.network.listener.NetworkPacketListener;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketWrapper;
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketWrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.sender.NetworkPacketSender;
 import com.fadedbytes.BinaryElementalOrbs.api.network.sender.NetworkSender;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandManager;
@@ -18,6 +21,7 @@ import com.fadedbytes.BinaryElementalOrbs.event.events.ServerStartupEvent;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
@@ -34,6 +38,7 @@ public class DefaultServer implements BeoServer {
 
     private NetworkListener mainListener;
     private NetworkSender mainSender;
+    private PacketWrapper packetWrapper;
 
     protected DefaultServer() {
         setupEventManager();
@@ -75,6 +80,10 @@ public class DefaultServer implements BeoServer {
         CommandManager.setupCommands();
     }
 
+    private void setWrapper() {
+        this.packetWrapper = new SimplePacketWrapper();
+    }
+
     private void setupEventManager() {
         eventManager = new EventManager();
     }
@@ -104,8 +113,12 @@ public class DefaultServer implements BeoServer {
 
     @Override
     public void receivePacket(Packet packet) {
-        System.out.println("Received packet: " + packet.getType());
-
+        packet.getType().getProcessor().process(packet);
     }
 
+    @Override
+    public void sendPacket(Packet packet, SocketAddress address) {
+        mainSender.send(packet, address);
+        System.out.println("Sent packet to " + address);
+    }
 }

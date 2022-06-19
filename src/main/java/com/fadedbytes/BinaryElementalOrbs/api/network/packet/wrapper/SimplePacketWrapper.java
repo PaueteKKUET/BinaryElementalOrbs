@@ -10,6 +10,8 @@ import java.util.List;
 
 public class SimplePacketWrapper implements PacketWrapper {
 
+    public static final SimplePacketWrapper INSTANCE = new SimplePacketWrapper();
+
     private static final String TAG_OPEN = "<%s%s>";
     private static final String TAG_CLOSE = "</%s>\n";
 

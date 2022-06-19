@@ -1,9 +1,12 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.packet;
 
+import com.fadedbytes.BinaryElementalOrbs.BEO;
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketUnwrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketUnwrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.MalformedTagException;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.Tag;
+import com.fadedbytes.BinaryElementalOrbs.server.DefaultServer;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.DatagramPacket;
@@ -11,7 +14,6 @@ import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 
 public abstract class NetworkPacket implements Packet {
-    private static final PacketUnwrapper UNWRAPPER = new SimplePacketUnwrapper();
 
     private final DatagramPacket packet;
     private final Tag rootTag;
@@ -55,7 +57,7 @@ public abstract class NetworkPacket implements Packet {
     }
 
     private @NotNull Tag unwrap() throws MalformedTagException {
-        return UNWRAPPER.generateTagFromString(this.readString());
+        return SimplePacketUnwrapper.INSTANCE.generateTagFromString(this.readString());
     }
 
     @Override
@@ -76,5 +78,10 @@ public abstract class NetworkPacket implements Packet {
     @Override
     public SocketAddress getSocketAddress() {
         return this.packet.getSocketAddress();
+    }
+
+    @Override
+    public void reply(Packet packet) {
+        BEO.getServer().sendPacket(packet, this.getSocketAddress());
     }
 }

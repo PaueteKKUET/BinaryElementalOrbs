@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class SimplePacketUnwrapper implements PacketUnwrapper {
 
+    public static final SimplePacketUnwrapper INSTANCE = new SimplePacketUnwrapper();
     private static final Pattern ATTRIBUTE_PATTERN = Pattern.compile("[a-zA-Z]+?=\".*?\"");
 
     @Override

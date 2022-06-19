@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.protocol;
 
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -7,6 +8,10 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Tag {
+
+    static int protocolVersion() {
+        return 1;
+    }
 
     /**
      * @return The name of the current tag.
@@ -84,6 +89,25 @@ public interface Tag {
             }
         }
 
+    }
+
+    public static Tag presetWithType(PacketType packetType) {
+        try {
+            RegularTag root = (RegularTag) createOuterTag(null, "beo");
+
+            RegularTag headers = (RegularTag) createOuterTag(root, "headers");
+            createTag(headers, "type", packetType.simpleName());
+            RegularTag serverInfo = (RegularTag) createOuterTag(headers, "serverInfo");
+            createTag(serverInfo, "protocolVersion", String.valueOf(protocolVersion()));
+
+            createOuterTag(root, "content");
+
+            return root;
+
+        } catch (MalformedTagException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

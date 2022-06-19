@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.packet;
 
+import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.Tag;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,5 +35,7 @@ public interface Packet {
     boolean isLocked();
 
     SocketAddress getSocketAddress();
+
+    void reply(Packet packet);
 
 }
