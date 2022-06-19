@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.listener;
 
+import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.api.network.SocketManager;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.DataPacket;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.NetworkPacket;
@@ -56,7 +57,7 @@ public class NetworkPacketListener extends SocketManager implements NetworkListe
             NetworkPacket newPacket = new DataPacket(packet, false);
             DefaultServer.getServer().receivePacket(newPacket);
         } catch (MalformedTagException e) {
-            System.out.println("Error while reading a received packet");
+            BEO.getLogger().debug("Error while reading a received packet");
         }
     }
 }

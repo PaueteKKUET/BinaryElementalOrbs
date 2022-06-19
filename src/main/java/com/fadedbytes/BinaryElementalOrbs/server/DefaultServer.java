@@ -16,6 +16,9 @@ import com.fadedbytes.BinaryElementalOrbs.command.commands.PermissionRole;
 import com.fadedbytes.BinaryElementalOrbs.console.Console;
 import com.fadedbytes.BinaryElementalOrbs.console.ConsoleManager;
 import com.fadedbytes.BinaryElementalOrbs.console.ServerConsole;
+import com.fadedbytes.BinaryElementalOrbs.console.logger.LogLevel;
+import com.fadedbytes.BinaryElementalOrbs.console.logger.LogManager;
+import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
 import com.fadedbytes.BinaryElementalOrbs.event.events.ServerStartupEvent;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
@@ -38,7 +41,6 @@ public class DefaultServer implements BeoServer {
 
     private NetworkListener mainListener;
     private NetworkSender mainSender;
-    private PacketWrapper packetWrapper;
 
     protected DefaultServer() {
         setupEventManager();
@@ -55,7 +57,7 @@ public class DefaultServer implements BeoServer {
             BEO.exit();
         }
 
-
+        registerCommands();
     }
 
     public static DefaultServer getServer() {
@@ -73,15 +75,18 @@ public class DefaultServer implements BeoServer {
                 System.out
         );
         ((ServerConsole) defaultConsole).setPermission(PermissionRole.CONSOLE);
+
+        LogManager.getGlobalLogger().subscribe(
+                this.isDebugMode() ?
+                        LogLevel.DEBUG :
+                        LogLevel.WARN,
+                getConsole()::sendMessage
+        );
     }
 
     private void registerCommands() {
         this.getConsole().sendMessage("Registering commands");
         CommandManager.setupCommands();
-    }
-
-    private void setWrapper() {
-        this.packetWrapper = new SimplePacketWrapper();
     }
 
     private void setupEventManager() {
@@ -119,6 +124,20 @@ public class DefaultServer implements BeoServer {
     @Override
     public void sendPacket(Packet packet, SocketAddress address) {
         mainSender.send(packet, address);
-        System.out.println("Sent packet to " + address);
+        getLogger().debug("Sent packet to " + address);
+    }
+
+    @Override
+    public boolean isDebugMode() {
+        return true;
+    }
+
+    @Override
+    public Logger getServerLogger() {
+        return LogManager.getGlobalLogger();
+    }
+
+    public static Logger getLogger() {
+        return getServer().getServerLogger();
     }
 }

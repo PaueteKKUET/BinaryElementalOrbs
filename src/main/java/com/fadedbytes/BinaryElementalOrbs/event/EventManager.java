@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.event;
 
+import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.EventListener;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
@@ -95,8 +96,7 @@ public class EventManager {
                     try {
                         listenerMethod.invoke(null, event);
                     } catch (InvocationTargetException | IllegalAccessException e) {
-                        System.out.println("Error while invoking listener method: " + listenerMethod.getName());
-                        // TODO log fail properly
+                        BEO.getLogger().error("Error while invoking listener method for event: " + validEventType.getName(), e.getStackTrace());
                     }
                 }
             }

@@ -31,7 +31,7 @@ public class NetworkPacketSender extends SocketManager implements NetworkSender 
             data = WRAPPER.generatePacketContent(packet.getRootTag()).getBytes(StandardCharsets.UTF_8);
             this.getSocket().send(new DatagramPacket(data, data.length, address));
         } catch (MalformedTagException | IOException e) {
-            e.printStackTrace();
+
         }
     }
 }

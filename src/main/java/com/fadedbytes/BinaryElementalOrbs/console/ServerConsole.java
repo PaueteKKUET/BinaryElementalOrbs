@@ -16,12 +16,14 @@ public final class ServerConsole implements Console {
     private final InputStream inputStream;
     private final OutputStream outputStream;
     private PermissionRole permission;
+    private Thread consoleThread;
 
     ServerConsole(@NotNull NamespacedKey key, @NotNull InputStream inputStream, @NotNull OutputStream outputStream) {
         this.key = key;
         this.inputStream = inputStream;
         this.outputStream = outputStream;
 
+        this.consoleThread = null;
         this.permission = PermissionRole.USER;
 
         this.start();
@@ -29,7 +31,9 @@ public final class ServerConsole implements Console {
     }
 
     public void start() {
-        Thread consoleThread = new Thread(ConsoleManager.CONSOLE_THREAD_GROUP, this::processInput, this.toString());
+        if (this.consoleThread != null) return;
+
+        this.consoleThread = new Thread(ConsoleManager.CONSOLE_THREAD_GROUP, this::processInput, this.toString());
         consoleThread.start();
     }
 

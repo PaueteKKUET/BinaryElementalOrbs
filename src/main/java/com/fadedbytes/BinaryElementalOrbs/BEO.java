@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs;
 
+import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.events.ServerShutdownEvent;
 import com.fadedbytes.BinaryElementalOrbs.server.BeoServer;
 import com.fadedbytes.BinaryElementalOrbs.server.DefaultServer;
@@ -12,7 +13,6 @@ public final class BEO {
 
         server = DefaultServer.getServer();
 
-        launchTests();
     }
 
     // Public control methods
@@ -27,10 +27,8 @@ public final class BEO {
         return server;
     }
 
-    public static void launchTests() {
-        new EventListenerTest();
-
-        PacketWrapperTests.testWrapper();
+    public static Logger getLogger() {
+        return getServer().getServerLogger();
     }
 
 }
