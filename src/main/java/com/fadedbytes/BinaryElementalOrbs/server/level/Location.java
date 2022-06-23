@@ -1,5 +1,7 @@
 package com.fadedbytes.BinaryElementalOrbs.server.level;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Location {
 
     private final Level level;
@@ -34,6 +36,11 @@ public class Location {
         return getCoord(axis.getPosition());
     }
 
+    /**
+     * Returns the level that this location is in.
+     * @return the level that this location is in.
+     */
+    @NotNull
     public Level getLevel() {
         return level;
     }
