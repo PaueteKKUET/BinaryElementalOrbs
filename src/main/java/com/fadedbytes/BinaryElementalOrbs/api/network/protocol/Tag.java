@@ -91,7 +91,7 @@ public interface Tag {
 
     }
 
-    public static Tag presetWithType(PacketType packetType) {
+    static Tag presetWithType(PacketType packetType) {
         try {
             RegularTag root = (RegularTag) createOuterTag(null, "beo");
 

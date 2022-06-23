@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.sender;
 
+import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.api.network.SocketManager;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketWrapper;
@@ -31,7 +32,7 @@ public class NetworkPacketSender extends SocketManager implements NetworkSender 
             data = WRAPPER.generatePacketContent(packet.getRootTag()).getBytes(StandardCharsets.UTF_8);
             this.getSocket().send(new DatagramPacket(data, data.length, address));
         } catch (MalformedTagException | IOException e) {
-
+            BEO.getLogger().debug("Failed to send packet: " + packet.getType().simpleName());
         }
     }
 }

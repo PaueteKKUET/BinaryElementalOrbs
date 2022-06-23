@@ -17,12 +17,14 @@ public final class ServerConsole implements Console {
     private final OutputStream outputStream;
     private PermissionRole permission;
     private Thread consoleThread;
+    private boolean shouldRead;
 
     ServerConsole(@NotNull NamespacedKey key, @NotNull InputStream inputStream, @NotNull OutputStream outputStream) {
         this.key = key;
         this.inputStream = inputStream;
         this.outputStream = outputStream;
 
+        this.shouldRead = true;
         this.consoleThread = null;
         this.permission = PermissionRole.USER;
 
@@ -38,7 +40,7 @@ public final class ServerConsole implements Console {
     }
 
     public void processInput() {
-        while (true) {
+        while (shouldRead) {
             byte[] buffer = new byte[0];
             byte lastInput;
 

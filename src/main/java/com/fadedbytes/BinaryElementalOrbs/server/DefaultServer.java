@@ -6,9 +6,6 @@ import com.fadedbytes.BinaryElementalOrbs.api.network.SocketManager;
 import com.fadedbytes.BinaryElementalOrbs.api.network.listener.NetworkListener;
 import com.fadedbytes.BinaryElementalOrbs.api.network.listener.NetworkPacketListener;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
-import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
-import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketWrapper;
-import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketWrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.sender.NetworkPacketSender;
 import com.fadedbytes.BinaryElementalOrbs.api.network.sender.NetworkSender;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandManager;
@@ -24,15 +21,13 @@ import com.fadedbytes.BinaryElementalOrbs.event.events.ServerStartupEvent;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
-import java.net.UnknownHostException;
 import java.time.LocalDate;
 
 public class DefaultServer implements BeoServer {
-    private static final InetAddress host = null;
-    private static final int port = 25466;
+    private static InetAddress host = null;
+    private static int port = 25466;
 
     private static DefaultServer SERVER_INSTANCE = null;
 
@@ -49,13 +44,7 @@ public class DefaultServer implements BeoServer {
         startupEvent.launch();
 
         setupConsole();
-        try {
-            setupNetworkManagers();
-        } catch (IOException e) {
-            this.getConsole().sendMessage("Can't bind to address " + host.getHostAddress() + ":" + port);
-            this.getConsole().sendMessage("Server shutting down");
-            BEO.exit();
-        }
+        setupNetworkManagers();
 
         registerCommands();
     }
@@ -93,12 +82,21 @@ public class DefaultServer implements BeoServer {
         eventManager = new EventManager();
     }
 
-    private void setupNetworkManagers() throws IOException {
+    private void setupNetworkManagers() {
         this.getConsole().sendMessage("Starting network manager");
         ServerNetworkManager.init();
 
-        mainListener = new NetworkPacketListener(host, port);
-        mainSender = new NetworkPacketSender(host);
+        try {
+            if (host == null) {
+                host = InetAddress.getLocalHost();
+            }
+            mainListener = new NetworkPacketListener(host, port);
+            mainSender = new NetworkPacketSender(host);
+        } catch (IOException e) {
+            this.getConsole().sendMessage("Can't bind to address " + host.getHostAddress() + ":" + port);
+            this.getConsole().sendMessage("Server shutting down");
+            BEO.exit();
+        }
 
         ServerNetworkManager.addSocketManager((SocketManager) mainListener);
         ServerNetworkManager.addSocketManager((SocketManager) mainSender);

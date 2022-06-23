@@ -1,6 +1,5 @@
 package com.fadedbytes.BinaryElementalOrbs.event;
 
-import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,5 @@
 package com.fadedbytes.BinaryElementalOrbs.command.commands;
 
-import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutor;
-
 import java.util.List;
 
 /**

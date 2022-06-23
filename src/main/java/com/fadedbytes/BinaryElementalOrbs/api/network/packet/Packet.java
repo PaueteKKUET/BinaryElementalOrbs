@@ -34,8 +34,20 @@ public interface Packet {
      */
     boolean isLocked();
 
+    /**
+     * @return whether this packet was created by the server.
+     */
+    boolean isCreatedByServer();
+
+    /**
+     * @return the socket address of this packet.
+     */
     SocketAddress getSocketAddress();
 
+    /**
+     * Replies to this packet with the given packet. If the packet was created by the server, the packet should not be replied to.
+     * @param packet The packet to reply with.
+     */
     void reply(Packet packet);
 
 }

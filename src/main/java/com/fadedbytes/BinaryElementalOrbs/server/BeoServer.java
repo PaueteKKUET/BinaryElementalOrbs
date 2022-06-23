@@ -5,7 +5,6 @@ import com.fadedbytes.BinaryElementalOrbs.console.Console;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
 
-import java.net.DatagramPacket;
 import java.net.SocketAddress;
 
 public interface BeoServer {

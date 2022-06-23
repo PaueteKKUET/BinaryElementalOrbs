@@ -118,14 +118,14 @@ public class SimplePacketUnwrapper implements PacketUnwrapper {
 
         // parse the tag attributes, if exists
         final String rawOpenTag = rawString.substring(0, lastOpenTagIndex + 1);
-        String rawAttributess =  rawOpenTag
+        String rawAttributes =  rawOpenTag
                 .replace("<" + tagName, "")
                 .replace(">", "")
                 .trim();
 
         final HashMap<String, String> attributeMap = new HashMap<>();
-        if (rawAttributess.length() > 0) {
-            Matcher matcher = ATTRIBUTE_PATTERN.matcher(rawAttributess);
+        if (rawAttributes.length() > 0) {
+            Matcher matcher = ATTRIBUTE_PATTERN.matcher(rawAttributes);
 
             while (matcher.find()) {
                 String attribute = matcher.group();

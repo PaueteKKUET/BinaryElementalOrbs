@@ -1,7 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor;
 
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
-import org.jetbrains.annotations.NotNull;
 
 public interface PacketProcessor {
 

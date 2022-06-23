@@ -23,7 +23,7 @@ public class NamespacedKey {
     }
 
     private boolean isValidString(String value) {
-        return value.matches("[a-z0-9_]+");
+        return value.matches("[a-z\\d_]+");
     }
 
     @NotNull

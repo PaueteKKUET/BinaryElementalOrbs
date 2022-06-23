@@ -2,14 +2,11 @@ package com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor;
 
 import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.DataPacket;
-import com.fadedbytes.BinaryElementalOrbs.api.network.packet.NetworkPacket;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketWrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.MalformedTagException;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.RegularTag;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.Tag;
-
-import java.net.DatagramPacket;
 
 public class PingPacketProcessor extends BasePacketProcessor {
 
@@ -24,12 +21,14 @@ public class PingPacketProcessor extends BasePacketProcessor {
     public void process(Packet packet) {
         if (PONG_PACKET == null) {
             try {
-                packet.reply(createPacket());
+                PONG_PACKET = createPacket();
             } catch (MalformedTagException e) {
                 BEO.getLogger().error("Failed to create PONG packet");
                 BEO.getLogger().trace(e.getStackTrace());
             }
         }
+
+        packet.reply(PONG_PACKET);
 
     }
 

@@ -20,7 +20,7 @@ public abstract class SocketManager implements AutoCloseable {
         this.SOCKET = new DatagramSocket(port, address);
     }
 
-    private void closeSocket() throws IOException {
+    private void closeSocket() {
         this.SOCKET.close();
     }
 

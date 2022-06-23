@@ -2,11 +2,9 @@ package com.fadedbytes.BinaryElementalOrbs.api.network.packet;
 
 import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
-import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.PacketUnwrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.wrapper.SimplePacketUnwrapper;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.MalformedTagException;
 import com.fadedbytes.BinaryElementalOrbs.api.network.protocol.Tag;
-import com.fadedbytes.BinaryElementalOrbs.server.DefaultServer;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.DatagramPacket;
@@ -19,7 +17,7 @@ public abstract class NetworkPacket implements Packet {
     private final Tag rootTag;
     private final PacketType type;
     private boolean locked;
-    private boolean createdByServer;
+    private final boolean createdByServer;
 
     public NetworkPacket(DatagramPacket packet, boolean createdByServer) throws MalformedTagException {
         this.packet = packet;
@@ -83,5 +81,10 @@ public abstract class NetworkPacket implements Packet {
     @Override
     public void reply(Packet packet) {
         BEO.getServer().sendPacket(packet, this.getSocketAddress());
+    }
+
+    @Override
+    public boolean isCreatedByServer() {
+        return this.createdByServer;
     }
 }

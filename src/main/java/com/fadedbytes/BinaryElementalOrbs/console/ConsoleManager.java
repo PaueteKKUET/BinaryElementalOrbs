@@ -1,6 +1,5 @@
 package com.fadedbytes.BinaryElementalOrbs.console;
 
-import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutionCode;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandManager;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 import org.jetbrains.annotations.NotNull;

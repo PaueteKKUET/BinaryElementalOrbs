@@ -14,7 +14,7 @@ public enum PacketType {
 
     private final PacketProcessor processor;
 
-    private PacketType(@NotNull Class<? extends BasePacketProcessor> processorClass) {
+    PacketType(@NotNull Class<? extends BasePacketProcessor> processorClass) {
         this.processor = BasePacketProcessor.getInstanceOf(processorClass);
     }
 

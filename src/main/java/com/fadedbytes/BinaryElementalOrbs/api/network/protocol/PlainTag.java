@@ -1,6 +1,7 @@
 package com.fadedbytes.BinaryElementalOrbs.api.network.protocol;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -58,8 +59,16 @@ public class PlainTag implements Tag {
         return this.parent;
     }
 
+    /**
+     * Sets the value of this tag.
+     * @param value The new value of this tag.
+     */
+    public void setValue(@Nullable String value) {
+        this.value = value == null ? "" : value;
+    }
+
     @Override
     public String toString() {
-        return "";
+        return this.name + ": " + this.value;
     }
 }

@@ -72,7 +72,13 @@ public class EventManager {
      */
     private Class<? extends Event> getEventClass(Method listenerMethod) {
         try {
-            return ((Class<? extends Event>) listenerMethod.getParameterTypes()[0]);
+            Class<?> eventClass = listenerMethod.getParameterTypes()[0];
+
+            if (Event.class.isAssignableFrom(eventClass)) {
+                return (Class<? extends Event>) eventClass;
+            } else {
+                throw new Exception();
+            }
         } catch (Exception e) {
             throw new IllegalArgumentException("Method is not a valid listener method: " + listenerMethod.getName());
         }

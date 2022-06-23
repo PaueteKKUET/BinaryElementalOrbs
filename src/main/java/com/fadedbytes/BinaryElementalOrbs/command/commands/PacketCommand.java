@@ -1,6 +1,5 @@
 package com.fadedbytes.BinaryElementalOrbs.command.commands;
 
-import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.processor.PacketType;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutionCode;
 import com.fadedbytes.BinaryElementalOrbs.command.CommandExecutor;
@@ -11,24 +10,20 @@ import java.util.Arrays;
 public class PacketCommand implements CommandExecutor {
     @Override
     public CommandExecutionCode runCommand(CommandSender sender, String command, String... args) {
-        switch (args.length) {
-            case 0: {
+        if (args.length == 0) {
+            sender.sendMessage("Usage: /packet <list | send>");
+            return CommandExecutionCode.INVALID_ARGUMENTS;
+        }
+        switch (args[0]) {
+            case "list" -> {
+                return list(sender, Arrays.copyOfRange(args, 1, args.length));
+            }
+            case "send" -> {
+                return send(sender, Arrays.copyOfRange(args, 1, args.length));
+            }
+            default -> {
                 sender.sendMessage("Usage: /packet <list | send>");
                 return CommandExecutionCode.INVALID_ARGUMENTS;
-            }
-            default: {
-                switch (args[0]) {
-                    case "list": {
-                        return list(sender, Arrays.copyOfRange(args, 1, args.length));
-                    }
-                    case "send": {
-                        return send(sender, Arrays.copyOfRange(args, 1, args.length));
-                    }
-                    default: {
-                        sender.sendMessage("Usage: /packet <list | send>");
-                        return CommandExecutionCode.INVALID_ARGUMENTS;
-                    }
-                }
             }
         }
     }
@@ -51,11 +46,11 @@ public class PacketCommand implements CommandExecutor {
     private CommandExecutionCode list(CommandSender sender, String... args) {
 
         switch (args.length) {
-            case 0: {
+            case 0 -> {
                 sender.sendMessage("Usage: /packet list <types | last>");
                 return CommandExecutionCode.INVALID_ARGUMENTS;
             }
-            case 1: {
+            case 1 -> {
                 if (args[0].equals("types")) {
                     printPacketTypesTo(sender, false);
                     return CommandExecutionCode.SUCCESS;
@@ -67,7 +62,7 @@ public class PacketCommand implements CommandExecutor {
                     return CommandExecutionCode.INVALID_ARGUMENTS;
                 }
             }
-            case 2: {
+            case 2 -> {
                 if (args[0].equals("types")) {
                     printPacketTypesTo(sender, args[1].equals("all"));
                     return CommandExecutionCode.SUCCESS;
@@ -90,16 +85,13 @@ public class PacketCommand implements CommandExecutor {
     }
 
     private CommandExecutionCode send(CommandSender sender, String... args) {
-        switch (args.length) {
-            case 0: {
-                sender.sendMessage("Usage: /packet send <type> <data> <address>");
-                return CommandExecutionCode.INVALID_ARGUMENTS;
-            }
-            default: {
-                sender.sendMessage("Not implemented yet, sorry!");
-                return CommandExecutionCode.SUCCESS;
-            }
+        if (args.length == 0) {
+            sender.sendMessage("Usage: /packet send <type> <data> <address>");
+            return CommandExecutionCode.INVALID_ARGUMENTS;
         }
+
+        sender.sendMessage("Not implemented yet, sorry!");
+        return CommandExecutionCode.SUCCESS;
     }
 
     private void printPacketTypesTo(CommandSender sender, boolean alsoUpstream) {
