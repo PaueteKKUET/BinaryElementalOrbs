@@ -1,5 +1,6 @@
-package com.fadedbytes.BinaryElementalOrbs.event.events;
+package com.fadedbytes.BinaryElementalOrbs.event.events.server;
 
+import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.server.BeoServer;
 
 public abstract class ServerEvent implements Event {

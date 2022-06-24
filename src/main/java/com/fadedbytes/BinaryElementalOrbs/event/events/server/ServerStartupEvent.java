@@ -1,4 +1,4 @@
-package com.fadedbytes.BinaryElementalOrbs.event.events;
+package com.fadedbytes.BinaryElementalOrbs.event.events.server;
 
 import com.fadedbytes.BinaryElementalOrbs.server.BeoServer;
 
