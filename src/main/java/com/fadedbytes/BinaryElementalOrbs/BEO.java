@@ -1,7 +1,7 @@
 package com.fadedbytes.BinaryElementalOrbs;
 
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
-import com.fadedbytes.BinaryElementalOrbs.event.events.ServerShutdownEvent;
+import com.fadedbytes.BinaryElementalOrbs.event.events.server.ServerShutdownEvent;
 import com.fadedbytes.BinaryElementalOrbs.server.BeoServer;
 import com.fadedbytes.BinaryElementalOrbs.server.DefaultServer;
 

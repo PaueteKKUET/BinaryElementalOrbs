@@ -17,17 +17,23 @@ import com.fadedbytes.BinaryElementalOrbs.console.logger.LogLevel;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.LogManager;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
-import com.fadedbytes.BinaryElementalOrbs.event.events.ServerStartupEvent;
+import com.fadedbytes.BinaryElementalOrbs.event.events.server.ServerStartupEvent;
+import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
+import com.fadedbytes.BinaryElementalOrbs.server.level.SimpleLevel;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class DefaultServer implements BeoServer {
     private static InetAddress host = null;
-    private static int port = 25466;
+    private final static int port = 25466;
 
     private static DefaultServer SERVER_INSTANCE = null;
 
@@ -36,6 +42,7 @@ public class DefaultServer implements BeoServer {
 
     private NetworkListener mainListener;
     private NetworkSender mainSender;
+    private HashMap<NamespacedKey, Level> levelHolder;
 
     protected DefaultServer() {
         setupEventManager();
@@ -47,6 +54,8 @@ public class DefaultServer implements BeoServer {
         setupNetworkManagers();
 
         registerCommands();
+
+        registerLevels();
     }
 
     public static DefaultServer getServer() {
@@ -104,13 +113,19 @@ public class DefaultServer implements BeoServer {
         ServerNetworkManager.init();
     }
 
+    private void registerLevels() {
+        this.levelHolder = new HashMap<>();
+
+        this.addLevel(new NamespacedKey(NamespacedKey.BEO_NAMESPACE, "test_level"), new SimpleLevel("test_level"));
+    }
+
     @Override
-    public EventManager getEventManager() {
+    public @NotNull EventManager getEventManager() {
         return this.eventManager;
     }
 
     @Override
-    public Console getConsole() {
+    public @NotNull Console getConsole() {
         return this.defaultConsole;
     }
 
@@ -131,8 +146,28 @@ public class DefaultServer implements BeoServer {
     }
 
     @Override
-    public Logger getServerLogger() {
+    public @NotNull Logger getServerLogger() {
         return LogManager.getGlobalLogger();
+    }
+
+    @Override
+    public @NotNull Collection<Level> getLevels() {
+        return this.levelHolder.values();
+    }
+
+    @Override
+    public @Nullable Level getLevel(NamespacedKey key) {
+        return this.levelHolder.get(key);
+    }
+
+    @Override
+    public void addLevel(NamespacedKey key, Level level) {
+        this.levelHolder.put(key, level);
+    }
+
+    @Override
+    public void removeLevel(NamespacedKey key) {
+        this.levelHolder.remove(key);
     }
 
     public static Logger getLogger() {
