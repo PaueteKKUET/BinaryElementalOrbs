@@ -22,10 +22,10 @@ public interface LevelElement {
     Location getLocation();
 
     /**
-     * Sets the location of the element to the given location. The given location should not be null. To remove the element from the level, use {@link #remove()}.
+     * Sets the location of the element to the given location. To remove the element from the level, use {@link #remove()}.
      * @param location The location to set the element to.
      */
-    void setLocation(@NotNull Location location);
+    void setLocation(@Nullable Location location);
 
     /**
      * Gets the unique identifier of the element.

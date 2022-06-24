@@ -10,13 +10,15 @@ public abstract class SimpleElement implements LevelElement {
 
     private final UUID uuid;
     private Location location;
+    protected float weight;
 
-    public SimpleElement() {
+    public SimpleElement(float weight) {
         this.uuid = UUID.randomUUID();
+        this.weight = weight;
     }
 
-    public SimpleElement(Location loc) {
-        this();
+    public SimpleElement(Location loc, float weight) {
+        this(weight);
         this.setLocation(loc);
     }
 
@@ -41,7 +43,10 @@ public abstract class SimpleElement implements LevelElement {
     public void remove() {
         if (this.getLocation() == null) return;
         this.getLocation().getLevel().removeElement(this);
+    }
 
-
+    @Override
+    public float weight() {
+        return this.weight;
     }
 }

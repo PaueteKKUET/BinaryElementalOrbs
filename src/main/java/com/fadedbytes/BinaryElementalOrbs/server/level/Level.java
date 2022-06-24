@@ -1,6 +1,7 @@
 package com.fadedbytes.BinaryElementalOrbs.server.level;
 
 import com.fadedbytes.BinaryElementalOrbs.server.level.element.LevelElement;
+import com.fadedbytes.BinaryElementalOrbs.server.level.spacefabric.SpaceFabric;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +33,7 @@ public interface Level {
      * @param type the type of elements to return.
      * @return all elements of the specified type present in this level.
      */
+    @NotNull
     Collection<? extends LevelElement> getElementsOfType(@Nullable Class<? extends LevelElement> type);
 
     /**
@@ -50,6 +52,7 @@ public interface Level {
      * @param searchRadius the radius to search in.
      * @return the nearest element to the specified location.
      */
+    @Nullable
     LevelElement getNearestElement(@NotNull Location loc, float searchRadius);
 
     /**
@@ -76,11 +79,11 @@ public interface Level {
      * Moves an element an unspecified distance in the specified direction.
      * The speed of the movement is determined by the specified power, the
      * element's weight and the space fabric properties.
-     * @param from the element to move.
+     * @param element the element to move.
      * @param direction the direction to move the element in.
      * @param power the power of the movement.
      */
-    void moveElement(@NotNull Location from, @NotNull Location direction, float power);
+    void moveElement(@NotNull LevelElement element, @NotNull Location direction, float power);
 
     /**
      * Saves the level data.

@@ -2,6 +2,8 @@ package com.fadedbytes.BinaryElementalOrbs.server.level;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 public class Location {
 
     private final Level level;
@@ -37,12 +39,34 @@ public class Location {
     }
 
     /**
+     * @return the number of dimensions of the current location.
+     */
+    public int getDimensions() {
+        return coords.length;
+    }
+
+    /**
+     * @return all the coordinates of the current location, from 0 to {@link #getDimensions()} - 1.
+     */
+    public float[] getCoords() {
+        return Arrays.copyOf(coords, coords.length);
+    }
+
+    /**
      * Returns the level that this location is in.
      * @return the level that this location is in.
      */
     @NotNull
     public Level getLevel() {
         return level;
+    }
+
+    public float distance(Location other) {
+        if (this.getLevel().equals(other.getLevel())) {
+            return this.getLevel().getSpaceFabric().distanceBetween(this, other);
+        } else {
+            throw new IllegalArgumentException("Cannot calculate distance between locations in different levels.");
+        }
     }
 
 
