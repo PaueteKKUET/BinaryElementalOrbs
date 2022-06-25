@@ -17,6 +17,10 @@ import com.fadedbytes.BinaryElementalOrbs.console.logger.LogLevel;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.LogManager;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
+import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
+import com.fadedbytes.BinaryElementalOrbs.event.events.protocol.PacketLaunchEvent;
+import com.fadedbytes.BinaryElementalOrbs.event.events.protocol.PacketProcessEvent;
+import com.fadedbytes.BinaryElementalOrbs.event.events.server.ConsoleAttachedEvent;
 import com.fadedbytes.BinaryElementalOrbs.event.events.server.ServerStartupEvent;
 import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
 import com.fadedbytes.BinaryElementalOrbs.server.level.SimpleLevel;
@@ -73,6 +77,8 @@ public class DefaultServer implements BeoServer {
                 System.out
         );
         ((ServerConsole) defaultConsole).setPermission(PermissionRole.CONSOLE);
+        Event consoleEvent = new ConsoleAttachedEvent(this, defaultConsole);
+        consoleEvent.launch();
 
         LogManager.getGlobalLogger().subscribe(
                 this.isDebugMode() ?
@@ -131,13 +137,19 @@ public class DefaultServer implements BeoServer {
 
     @Override
     public void receivePacket(Packet packet) {
-        packet.getType().getProcessor().process(packet);
+        Event packetProcess = new PacketProcessEvent(this, packet);
+        if (packetProcess.launch()) {
+            packet.getType().getProcessor().process(packet);
+        }
     }
 
     @Override
     public void sendPacket(Packet packet, SocketAddress address) {
-        mainSender.send(packet, address);
-        getLogger().debug("Sent packet to " + address);
+        Event packetSend = new PacketLaunchEvent(this, packet, address);
+        if (packetSend.launch()) {
+            mainSender.send(packet, address);
+            getLogger().debug("Sent packet to " + address);
+        }
     }
 
     @Override
