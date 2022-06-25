@@ -4,11 +4,15 @@ import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
 
 public interface Event {
 
-    default void launch() {
+    /**
+     * @return true if the event has been launched properly, false otherwise.
+     */
+    default boolean launch() {
         if (this instanceof Cancellable cancellableEvent) {
-            if (cancellableEvent.isCancelled()) return;
+            if (cancellableEvent.isCancelled()) return false;
         }
         EventManager.launchEvent(this);
+        return true;
     }
 
 }
