@@ -2,17 +2,17 @@ package com.fadedbytes.BinaryElementalOrbs.event.events.level;
 
 import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class LevelEvent implements Event {
+/**
+ * Events representing something related to a level.
+ */
+public interface LevelEvent extends Event {
 
-    private final Level level;
-
-    public LevelEvent(Level level) {
-        this.level = level;
-    }
-
-    public Level getLevel() {
-        return this.level;
-    }
+    /**
+     * @return The level that this event is related to.
+     */
+    @NotNull
+    Level level();
 
 }
