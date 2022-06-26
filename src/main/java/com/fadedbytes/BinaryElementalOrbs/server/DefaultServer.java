@@ -18,6 +18,7 @@ import com.fadedbytes.BinaryElementalOrbs.console.logger.LogManager;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
 import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
+import com.fadedbytes.BinaryElementalOrbs.event.events.level.LevelAddedEvent;
 import com.fadedbytes.BinaryElementalOrbs.event.events.protocol.PacketLaunchEvent;
 import com.fadedbytes.BinaryElementalOrbs.event.events.protocol.PacketProcessEvent;
 import com.fadedbytes.BinaryElementalOrbs.event.events.server.ConsoleAttachedEvent;
@@ -174,7 +175,12 @@ public class DefaultServer implements BeoServer {
 
     @Override
     public void addLevel(NamespacedKey key, Level level) {
-        this.levelHolder.put(key, level);
+        if (!this.levelHolder.containsKey(key)) {
+            this.levelHolder.put(key, level);
+
+            Event levelAdded = new LevelAddedEvent(level, this);
+            levelAdded.launch();
+        }
     }
 
     @Override
