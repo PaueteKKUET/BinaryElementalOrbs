@@ -76,4 +76,29 @@ public interface BeoServer {
      */
     void removeLevel(NamespacedKey key);
 
+    /**
+     * @return the current status of the server.
+     */
+    ServerStatus getServerStatus();
+
+    /**
+     * @return whether the server has an enabled whitelist currently.
+     */
+    boolean whitelistEnabled();
+
+    /**
+     * @return the current message of the day.
+     */
+    String getMotd();
+
+    /**
+     * @return the current number of players online.
+     */
+    int getCurrentPlayerCount();
+
+    /**
+     * @return the maximum number of players allowed on the server.
+     */
+    int getMaxPlayerCount();
+
 }
