@@ -25,6 +25,8 @@ import com.fadedbytes.BinaryElementalOrbs.event.events.server.ConsoleAttachedEve
 import com.fadedbytes.BinaryElementalOrbs.event.events.server.ServerStartupEvent;
 import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
 import com.fadedbytes.BinaryElementalOrbs.server.level.SimpleLevel;
+import com.fadedbytes.BinaryElementalOrbs.server.player.OnlinePlayer;
+import com.fadedbytes.BinaryElementalOrbs.server.whitelist.Whitelist;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,12 +35,14 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 public class DefaultServer implements BeoServer {
     private static InetAddress host = null;
     private final static int port = 25466;
+    private final static int maxPlayers = 20;
 
     private static DefaultServer SERVER_INSTANCE = null;
 
@@ -48,6 +52,10 @@ public class DefaultServer implements BeoServer {
     private NetworkListener mainListener;
     private NetworkSender mainSender;
     private HashMap<NamespacedKey, Level> levelHolder;
+    private String motd;
+    private Whitelist whitelist;
+    private ServerStatus status;
+    private Collection<OnlinePlayer> onlinePlayers;
 
     protected DefaultServer() {
         setupEventManager();
@@ -55,12 +63,18 @@ public class DefaultServer implements BeoServer {
         ServerStartupEvent startupEvent = new ServerStartupEvent(this, LocalDate.now());
         startupEvent.launch();
 
+        setMotd("   ---   Binary Elemental Orbs Server ---   ");
+
         setupConsole();
         setupNetworkManagers();
 
         registerCommands();
 
         registerLevels();
+
+        this.onlinePlayers = new ArrayList<>();
+        this.whitelist = null;
+        this.status = ServerStatus.OPEN;
     }
 
     public static DefaultServer getServer() {
@@ -69,6 +83,10 @@ public class DefaultServer implements BeoServer {
         }
 
         return SERVER_INSTANCE;
+    }
+
+    public void setMotd(String motd) {
+        this.motd = motd;
     }
 
     private void setupConsole() {
@@ -186,6 +204,31 @@ public class DefaultServer implements BeoServer {
     @Override
     public void removeLevel(NamespacedKey key) {
         this.levelHolder.remove(key);
+    }
+
+    @Override
+    public ServerStatus getServerStatus() {
+        return this.status;
+    }
+
+    @Override
+    public boolean whitelistEnabled() {
+        return !(this.whitelist == null);
+    }
+
+    @Override
+    public String getMotd() {
+        return this.motd;
+    }
+
+    @Override
+    public int getCurrentPlayerCount() {
+        return this.onlinePlayers.size();
+    }
+
+    @Override
+    public int getMaxPlayerCount() {
+        return maxPlayers;
     }
 
     public static Logger getLogger() {
