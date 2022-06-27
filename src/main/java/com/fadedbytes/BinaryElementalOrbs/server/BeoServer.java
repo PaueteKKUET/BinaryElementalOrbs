@@ -72,7 +72,7 @@ public interface BeoServer {
 
     /**
      * Removes the given level from the running server. If the level is not loaded, nothing happens.
-     * @param level The level to remove.
+     * @param key The key of the level to remove.
      */
     void removeLevel(NamespacedKey key);
 
