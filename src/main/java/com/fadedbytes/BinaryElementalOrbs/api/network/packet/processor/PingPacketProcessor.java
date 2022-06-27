@@ -19,6 +19,11 @@ public class PingPacketProcessor extends BasePacketProcessor {
 
     @Override
     public void process(Packet packet) {
+
+        if (!this.canProcess(packet.getType())) {
+            throw new IllegalArgumentException("Cannot process packet of type: " + packet.getType());
+        }
+
         if (PONG_PACKET == null) {
             try {
                 PONG_PACKET = createPacket();
