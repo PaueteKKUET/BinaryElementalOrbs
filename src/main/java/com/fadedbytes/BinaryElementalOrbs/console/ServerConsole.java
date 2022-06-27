@@ -1,5 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.console;
 
+import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.command.commands.PermissionRole;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
@@ -78,8 +79,7 @@ public final class ServerConsole implements Console {
 
     @Override
     public void printMotd() {
-        println("Server starting...");
-        println("Console started");
+        println(BEO.getServer().getMotd());
     }
 
 
