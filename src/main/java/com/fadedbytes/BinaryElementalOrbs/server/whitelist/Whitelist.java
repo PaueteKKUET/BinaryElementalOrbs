@@ -14,38 +14,38 @@ public interface Whitelist {
      * @param player The player to check.
      * @return True if the player is listed in the whitelist, false otherwise.
      */
-    boolean includes(Player player);
+    boolean includes(String player);
 
     /**
      * Checks if the player can join the server according to the whitelist.
      * @param player The player to check.
      * @return True if the player can join the server, false otherwise.
      */
-    boolean canJoin(Player player);
+    boolean canJoin(String player);
 
     /**
      * Adds a player to the whitelist.
      * @param player The player to add.
      */
-    void addPlayer(Player player);
+    void addPlayer(String player);
 
     /**
      * Removes a player from the whitelist.
      * @param player The player to remove.
      */
-    void removePlayer(Player player);
+    void removePlayer(String player);
 
     /**
      * Adds a collection of players to the whitelist.
      * @param players The players to add.
      */
-    void addAllPlayers(Collection<Player> players);
+    void addAllPlayers(Collection<String> players);
 
     /**
      * Returns a collection of all players in the whitelist.
      * @return A collection of all players in the whitelist.
      */
-    Collection<Player> getPlayers();
+    Collection<String> getPlayers();
 
     /**
      * Gets the mode of this whitelist.
