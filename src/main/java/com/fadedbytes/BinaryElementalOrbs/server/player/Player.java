@@ -1,4 +1,4 @@
 package com.fadedbytes.BinaryElementalOrbs.server.player;
 
-public interface OnlinePlayer extends Player{
+public interface Player {
 }
