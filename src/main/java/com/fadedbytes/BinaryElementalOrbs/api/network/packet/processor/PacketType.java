@@ -5,12 +5,16 @@ import org.jetbrains.annotations.NotNull;
 public enum PacketType {
 
     UPSTREAM_PING(PingPacketProcessor.class),
-    UPSTREAM_SERVER_STATUS(ServerStatusPacketProcessor.class),
-    UPSTREAM_CONNECTION_REQUEST(ConnectionRequestPacketProcessor.class),
-
     DOWNSTREAM_PING(PingPacketProcessor.class),
+
+    UPSTREAM_SERVER_STATUS(ServerStatusPacketProcessor.class),
     DOWNSTREAM_SERVER_STATUS(ServerStatusPacketProcessor.class),
-    DOWNSTREAM_CONNECTION_RESPONSE(ConnectionRequestPacketProcessor.class);
+
+    UPSTREAM_CONNECTION_REQUEST(ConnectionRequestPacketProcessor.class),
+    DOWNSTREAM_CONNECTION_RESPONSE(ConnectionRequestPacketProcessor.class),
+
+    UPSTREAM_LOGIN_REQUEST(LoginRequestPacketProcessor.class),
+    DOWNSTREAM_LOGIN_RESPONSE(LoginRequestPacketProcessor.class);
 
     private final PacketProcessor processor;
 
