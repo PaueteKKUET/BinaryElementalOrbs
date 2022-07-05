@@ -17,4 +17,6 @@ public interface Console extends CommandSender {
 
     void printMotd();
 
+    void closeConsole();
+
 }
