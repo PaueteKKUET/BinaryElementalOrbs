@@ -30,7 +30,6 @@ public final class ServerConsole implements Console {
         this.permission = PermissionRole.USER;
 
         this.start();
-        this.printMotd();
     }
 
     public void start() {
@@ -80,6 +79,11 @@ public final class ServerConsole implements Console {
     @Override
     public void printMotd() {
         println(BEO.getServer().getMotd());
+    }
+
+    @Override
+    public void closeConsole() {
+        this.shouldRead = false;
     }
 
 
