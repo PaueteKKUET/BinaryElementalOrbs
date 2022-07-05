@@ -5,6 +5,8 @@ import com.fadedbytes.BinaryElementalOrbs.console.Console;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
 import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
+import com.fadedbytes.BinaryElementalOrbs.server.player.OnlinePlayer;
+import com.fadedbytes.BinaryElementalOrbs.server.player.Player;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -100,5 +102,46 @@ public interface BeoServer {
      * @return the maximum number of players allowed on the server.
      */
     int getMaxPlayerCount();
+
+    /**
+     * @return the current online players.
+     */
+    @NotNull Collection<OnlinePlayer> getOnlinePlayers();
+
+    /**
+     * Gets the online player with the given name. If no player is online with the given name, null is returned.
+     * @param name The name of the player to get.
+     * @return The online player with the given name.
+     */
+    @Nullable OnlinePlayer getPlayer(String name);
+
+    /**
+     * Checks if the given player is currently online.
+     * @param username The username of the player to check.
+     * @return Whether the given player is online.
+     */
+    boolean isLoggedIn(String username);
+
+    /**
+     * Checks if the given player is currently online.
+     * @param player The player to check.
+     * @return Whether the given player is online.
+     */
+    default boolean isLoggedIn(Player player) {
+        return isLoggedIn(player.getName());
+    }
+
+    /**
+     * Tries to login the given player. If the player is already online, nothing happens.
+     * @param player The player to login.
+     * @param password The given password of the player.
+     */
+    void login(Player player, String password);
+
+    /**
+     * Disconnects the given player.
+     * @param player The player to disconnect.
+     */
+    void disconnect(OnlinePlayer player);
 
 }
