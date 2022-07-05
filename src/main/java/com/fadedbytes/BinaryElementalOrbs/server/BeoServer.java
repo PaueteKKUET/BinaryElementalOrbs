@@ -104,6 +104,11 @@ public interface BeoServer {
     int getMaxPlayerCount();
 
     /**
+     * @return true if the server is full, false otherwise.
+     */
+    boolean isServerFull();
+
+    /**
      * @return the current online players.
      */
     @NotNull Collection<OnlinePlayer> getOnlinePlayers();
@@ -144,5 +149,19 @@ public interface BeoServer {
      * @param player The player to disconnect.
      */
     void disconnect(OnlinePlayer player);
+
+    /**
+     * Checks if the player with the given name can join according to the server's whitelist. If there is no whitelist, this method always returns true.
+     * @param username The username of the player to check.
+     * @return Whether the player with the given name can join according to the server's whitelist.
+     */
+    boolean whitelistAllowsPlayer(String username);
+
+    /**
+     * Checks if the player with the given name is banned from this server.
+     * @param username The username of the player to check.
+     * @return Whether the player with the given name is banned from this server.
+     */
+    boolean isBanned(String username);
 
 }
