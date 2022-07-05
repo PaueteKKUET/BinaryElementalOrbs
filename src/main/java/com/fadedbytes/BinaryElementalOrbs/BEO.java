@@ -5,6 +5,8 @@ import com.fadedbytes.BinaryElementalOrbs.event.events.server.ServerShutdownEven
 import com.fadedbytes.BinaryElementalOrbs.server.BeoServer;
 import com.fadedbytes.BinaryElementalOrbs.server.DefaultServer;
 
+import java.time.LocalDateTime;
+
 public final class BEO {
 
     private static BeoServer server;
@@ -18,7 +20,7 @@ public final class BEO {
     // Public control methods
 
     public static void exit() {
-        ServerShutdownEvent shutdownEvent = new ServerShutdownEvent(server);
+        ServerShutdownEvent shutdownEvent = new ServerShutdownEvent(server, LocalDateTime.now());
         shutdownEvent.launch();
         System.exit(0);
     }
