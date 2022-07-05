@@ -135,8 +135,9 @@ public interface BeoServer {
      * Tries to login the given player. If the player is already online, nothing happens.
      * @param player The player to login.
      * @param password The given password of the player.
+     * @param address The address of the player
      */
-    void login(Player player, String password);
+    void login(Player player, String password, SocketAddress address);
 
     /**
      * Disconnects the given player.
