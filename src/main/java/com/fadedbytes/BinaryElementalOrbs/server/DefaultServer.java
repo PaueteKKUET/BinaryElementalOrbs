@@ -23,8 +23,7 @@ import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.event.events.level.LevelAddedEvent;
 import com.fadedbytes.BinaryElementalOrbs.event.events.protocol.PacketLaunchEvent;
 import com.fadedbytes.BinaryElementalOrbs.event.events.protocol.PacketProcessEvent;
-import com.fadedbytes.BinaryElementalOrbs.event.events.server.ConsoleAttachedEvent;
-import com.fadedbytes.BinaryElementalOrbs.event.events.server.ServerStartupEvent;
+import com.fadedbytes.BinaryElementalOrbs.event.events.server.*;
 import com.fadedbytes.BinaryElementalOrbs.security.login.LoginManager;
 import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
 import com.fadedbytes.BinaryElementalOrbs.server.level.SimpleLevel;
@@ -215,8 +214,28 @@ public class DefaultServer implements BeoServer {
     }
 
     @Override
+    public void setServerStatus(@NotNull ServerStatus status) {
+        if (this.getServerStatus().equals(status)) return;
+
+        Event serverStatusChange = new ServerStatusChangedEvent(this, status);
+        if (!serverStatusChange.launch()) return;
+
+        this.status = status;
+    }
+
+    @Override
     public boolean whitelistEnabled() {
         return !(this.whitelist == null);
+    }
+
+    @Override
+    public void setWhitelist(Whitelist whitelist) {
+        this.whitelist = whitelist;
+    }
+
+    @Override
+    public void disableWhitelist() {
+        this.whitelist = null;
     }
 
     @Override
@@ -281,6 +300,10 @@ public class DefaultServer implements BeoServer {
             if (LoginManager.isCorrectPassword(player, password)) {
                 OnlinePlayer newPlayer = player.fromPlayer(address);
                 this.onlinePlayers.add(newPlayer);
+
+                Event playerLogin = new PlayerLoginEvent(this, newPlayer, LocalDateTime.now());
+                playerLogin.launch();
+
             } else {
                 response = LoginRequestPacketProcessor.LoginResponse.INCORRECT_PASSWORD;
             }
@@ -295,7 +318,10 @@ public class DefaultServer implements BeoServer {
 
     @Override
     synchronized public void disconnect(OnlinePlayer player) {
-        this.onlinePlayers.remove(player);
+        if (this.onlinePlayers.remove(player)) {
+            Event playerLogout = new PlayerDisconnectEvent(this, player, LocalDateTime.now());
+            playerLogout.launch();
+        }
     }
 
     @Override
