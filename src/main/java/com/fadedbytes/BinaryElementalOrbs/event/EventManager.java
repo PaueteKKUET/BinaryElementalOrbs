@@ -3,6 +3,8 @@ package com.fadedbytes.BinaryElementalOrbs.event;
 import com.fadedbytes.BinaryElementalOrbs.BEO;
 import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.EventListener;
+import com.fadedbytes.BinaryElementalOrbs.event.listener.Listener;
+import com.fadedbytes.BinaryElementalOrbs.event.listener.PingPacketListener;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +25,7 @@ public class EventManager {
         EVENT_MANAGERS.add(this);
     }
 
-    public void addEventListener(NamespacedKey key, Class<? extends EventListener> listenerClass) {
+    public void addEventListener(NamespacedKey key, Class<? extends Listener> listenerClass) {
         if (LISTENERS.containsKey(key)) {
             throw new IllegalArgumentException("Listener already registered for key: " + key);
         }
@@ -56,7 +58,7 @@ public class EventManager {
     }
 
     private boolean isValidListenerMethod(Method listenerCandidate) {
-        com.fadedbytes.BinaryElementalOrbs.event.EventListener annotation = listenerCandidate.getAnnotation(com.fadedbytes.BinaryElementalOrbs.event.EventListener.class);
+        EventListener annotation = listenerCandidate.getAnnotation(EventListener.class);
         if (annotation == null) return false;
 
         Class<?>[] parameterTypes = listenerCandidate.getParameterTypes();
@@ -110,4 +112,8 @@ public class EventManager {
         }
     }
 
+    // All created event listeners must be registered here.
+    public void registerListeners() {
+        new PingPacketListener(this);
+    }
 }

@@ -117,6 +117,7 @@ public class DefaultServer implements BeoServer {
 
     private void setupEventManager() {
         eventManager = new EventManager();
+        eventManager.registerListeners();
     }
 
     private void setupNetworkManagers() {

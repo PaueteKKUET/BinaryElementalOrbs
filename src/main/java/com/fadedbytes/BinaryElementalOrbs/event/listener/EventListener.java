@@ -1,12 +1,13 @@
 package com.fadedbytes.BinaryElementalOrbs.event.listener;
 
-import com.fadedbytes.BinaryElementalOrbs.BEO;
-import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 
-public abstract class EventListener {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    public EventListener() {
-        BEO.getServer().getEventManager().addEventListener(new NamespacedKey(NamespacedKey.BEO_NAMESPACE, getClass().getSimpleName()), this.getClass());
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface EventListener {
 
 }

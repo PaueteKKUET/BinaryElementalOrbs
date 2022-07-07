@@ -9,6 +9,7 @@ public interface Event {
      */
     default boolean launch() {
         if (this instanceof Cancellable cancellableEvent) {
+            System.out.println("Cancelled: " + cancellableEvent.isCancelled());
             if (cancellableEvent.isCancelled()) return false;
         }
         EventManager.launchEvent(this);
