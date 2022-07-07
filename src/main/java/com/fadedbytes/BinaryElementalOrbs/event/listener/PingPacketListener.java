@@ -14,12 +14,10 @@ public class PingPacketListener extends Listener {
 
     @EventListener
     public static void onPingPacketReceived(PacketProcessEvent event) {
-        System.out.println(event.toString());
         if (!event.packet().getType().equals(PacketType.UPSTREAM_PING)) return;
 
         event.setCancelled(pingCount % 2 == 0);
         pingCount++;
-        System.out.println("Event cancelled: " + event.isCancelled());
     }
 
 }
