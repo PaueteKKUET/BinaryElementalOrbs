@@ -1,6 +1,7 @@
 package com.fadedbytes.BinaryElementalOrbs.event;
 
 import com.fadedbytes.BinaryElementalOrbs.BEO;
+import com.fadedbytes.BinaryElementalOrbs.event.events.Cancellable;
 import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.EventListener;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.Listener;
@@ -86,7 +87,7 @@ public class EventManager {
         }
     }
 
-    public static void launchEvent(Event event) {
+    public static boolean launchEvent(Event event) {
         Class<? extends Event> eventType = event.getClass();
 
         for (EventManager eventManager : EVENT_MANAGERS) {
@@ -109,6 +110,12 @@ public class EventManager {
                 }
             }
 
+        }
+
+        if (event instanceof Cancellable cancellableEvent) {
+            return !cancellableEvent.isCancelled();
+        } else {
+            return true;
         }
     }
 
