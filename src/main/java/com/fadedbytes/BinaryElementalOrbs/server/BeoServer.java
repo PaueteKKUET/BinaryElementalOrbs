@@ -7,6 +7,7 @@ import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
 import com.fadedbytes.BinaryElementalOrbs.server.level.Level;
 import com.fadedbytes.BinaryElementalOrbs.server.player.OnlinePlayer;
 import com.fadedbytes.BinaryElementalOrbs.server.player.Player;
+import com.fadedbytes.BinaryElementalOrbs.server.whitelist.Whitelist;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -84,9 +85,28 @@ public interface BeoServer {
     ServerStatus getServerStatus();
 
     /**
+     * Changes the server status. This may trigger certain events. If the given status is the same as the current status, nothing happens.
+     * @param status The new status of the server.
+     */
+    void setServerStatus(@NotNull ServerStatus status);
+
+    /**
      * @return whether the server has an enabled whitelist currently.
      */
     boolean whitelistEnabled();
+
+    /**
+     * Sets the server whitelist to the given whitelist and enables it.
+     * If the given whitelist is null, the server will disable the whitelist,
+     * which can also be done by calling {@link #disableWhitelist()}.
+     * @param whitelist The whitelist to set.
+     */
+    void setWhitelist(Whitelist whitelist);
+
+    /**
+     * Disables the server whitelist.
+     */
+    void disableWhitelist();
 
     /**
      * @return the current message of the day.
@@ -163,5 +183,4 @@ public interface BeoServer {
      * @return Whether the player with the given name is banned from this server.
      */
     boolean isBanned(String username);
-
 }
