@@ -5,6 +5,7 @@ import com.fadedbytes.BinaryElementalOrbs.event.events.Cancellable;
 import com.fadedbytes.BinaryElementalOrbs.event.events.Event;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.EventListener;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.Listener;
+import com.fadedbytes.BinaryElementalOrbs.event.listener.LoggingListener;
 import com.fadedbytes.BinaryElementalOrbs.event.listener.PingPacketListener;
 import com.fadedbytes.BinaryElementalOrbs.util.key.NamespacedKey;
 
@@ -95,7 +96,7 @@ public class EventManager {
             ArrayList<Class<? extends Event>> validEventTypes = new ArrayList<>();
 
             for (Class<? extends Event> listenerClass : eventManager.LISTENERS_BY_EVENT.keySet()) {
-                if (eventType.isAssignableFrom(listenerClass)) {
+                if (listenerClass.isAssignableFrom(eventType)) {
                     validEventTypes.add(listenerClass);
                 }
             }
@@ -122,5 +123,6 @@ public class EventManager {
     // All created event listeners must be registered here.
     public void registerListeners() {
         new PingPacketListener(this);
+        new LoggingListener(this);
     }
 }
