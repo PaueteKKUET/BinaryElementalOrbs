@@ -14,7 +14,7 @@ public enum LogLevel {
     }
 
     public boolean isAtLeast(LogLevel otherLevel) {
-        return this.level <= otherLevel.level;
+        return this.level >= otherLevel.level;
     }
 
 
