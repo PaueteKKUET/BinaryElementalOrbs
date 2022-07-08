@@ -11,4 +11,8 @@ public interface Event {
         return EventManager.launchEvent(this);
     }
 
+    default String toLogString() {
+        return this.getClass().getSimpleName();
+    }
+
 }
