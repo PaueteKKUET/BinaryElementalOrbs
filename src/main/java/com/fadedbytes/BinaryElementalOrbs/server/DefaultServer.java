@@ -61,6 +61,7 @@ public class DefaultServer implements BeoServer {
     private final Collection<OnlinePlayer> onlinePlayers;
 
     protected DefaultServer() {
+        setupConsole();
         setupEventManager();
 
         ServerStartupEvent startupEvent = new ServerStartupEvent(this, LocalDateTime.now());
@@ -68,7 +69,6 @@ public class DefaultServer implements BeoServer {
 
         setMotd("   ---   Binary Elemental Orbs Server ---   ");
 
-        setupConsole();
         setupNetworkManagers();
 
         registerCommands();
@@ -99,8 +99,6 @@ public class DefaultServer implements BeoServer {
                 System.out
         );
         ((ServerConsole) defaultConsole).setPermission(PermissionRole.CONSOLE);
-        Event consoleEvent = new ConsoleAttachedEvent(this, defaultConsole);
-        consoleEvent.launch();
 
         LogManager.getGlobalLogger().subscribe(
                 this.isDebugMode() ?
@@ -336,7 +334,4 @@ public class DefaultServer implements BeoServer {
         return false;
     }
 
-    public static Logger getLogger() {
-        return getServer().getServerLogger();
-    }
 }
