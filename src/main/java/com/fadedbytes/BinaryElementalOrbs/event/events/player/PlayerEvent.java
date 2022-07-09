@@ -12,4 +12,8 @@ public interface PlayerEvent extends Event {
      */
     @NotNull Player player();
 
+    @Override
+    default String toLogString() {
+        return "(" + this.player().getName() + ")";
+    }
 }
