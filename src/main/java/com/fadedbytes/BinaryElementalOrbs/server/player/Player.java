@@ -31,4 +31,10 @@ public interface Player {
      */
     OnlinePlayer fromPlayer(@NotNull SocketAddress address);
 
+    /**
+     * Sends a chat message to the player.
+     * @param message The message to send.
+     */
+    void sendMessage(String message);
+
 }

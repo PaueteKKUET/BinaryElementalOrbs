@@ -35,4 +35,9 @@ public class LoggingInPlayer implements Player {
     public OnlinePlayer fromPlayer(@NotNull SocketAddress address) {
         return null;
     }
+
+    @Override
+    public void sendMessage(String message) {
+        // Can't send messages to a player that isn't logged in
+    }
 }

@@ -27,4 +27,9 @@ public interface OnlinePlayer extends Player {
     default OnlinePlayer fromPlayer(@NotNull SocketAddress address) {
         return this;
     }
+
+    @Override
+    default void sendMessage(String message) {
+        // TODO: Implement chat message logic
+    }
 }
