@@ -1,9 +1,6 @@
 package com.fadedbytes.BinaryElementalOrbs.command;
 
-import com.fadedbytes.BinaryElementalOrbs.command.commands.Aliasable;
-import com.fadedbytes.BinaryElementalOrbs.command.commands.ExitCommand;
-import com.fadedbytes.BinaryElementalOrbs.command.commands.HelpCommand;
-import com.fadedbytes.BinaryElementalOrbs.command.commands.PacketCommand;
+import com.fadedbytes.BinaryElementalOrbs.command.commands.*;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -17,6 +14,7 @@ public class CommandManager {
         register(new ExitCommand());
         register(new HelpCommand());
         register(new PacketCommand());
+        register(new SayCommand());
     }
 
     public static void register(CommandExecutor executor) {
