@@ -41,6 +41,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 public class DefaultServer implements BeoServer {
     private static InetAddress host = null;
@@ -332,6 +333,21 @@ public class DefaultServer implements BeoServer {
     public boolean isBanned(String username) {
         // TODO implement ban system
         return false;
+    }
+
+    @Override
+    public void sendMessage(@NotNull Console console, @NotNull Supplier<String> message) {
+        console.sendMessage(message.get());
+    }
+
+    @Override
+    public void sendMessage(@NotNull String playerName, @NotNull Supplier<String> message) {
+
+        Player player = this.getPlayer(playerName);
+        if (player == null) return;
+
+        player.sendMessage(message.get());
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.fadedbytes.BinaryElementalOrbs.server;
 
 import com.fadedbytes.BinaryElementalOrbs.api.network.packet.Packet;
+import com.fadedbytes.BinaryElementalOrbs.command.CommandSender;
 import com.fadedbytes.BinaryElementalOrbs.console.Console;
 import com.fadedbytes.BinaryElementalOrbs.console.logger.Logger;
 import com.fadedbytes.BinaryElementalOrbs.event.EventManager;
@@ -14,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.net.SocketAddress;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 public interface BeoServer {
 
@@ -183,4 +185,30 @@ public interface BeoServer {
      * @return Whether the player with the given name is banned from this server.
      */
     boolean isBanned(String username);
+
+    /**
+     * Sends the given message to the given console.
+     * @param console The console to send the message to.
+     * @param message The message to send.
+     */
+    void sendMessage(@NotNull Console console, @NotNull Supplier<String> message);
+
+    /**
+     * Sends the given message to the given player.
+     * @param playerName The name of the player to send the message to.
+     * @param message The message to send.
+     */
+    void sendMessage(@NotNull String playerName, @NotNull Supplier<String> message);
+
+    /**
+     * Broadcasts the given message to all players and consoles.
+     * @param message The message to broadcast.
+     */
+    default void broadcastMessage(@NotNull Supplier<String> message) {
+        for (OnlinePlayer player : getOnlinePlayers()) {
+            sendMessage(player.getName(), message);
+        }
+
+        this.getConsole().sendMessage(message.get());
+    }
 }
